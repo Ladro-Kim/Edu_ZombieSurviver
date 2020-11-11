@@ -77,6 +77,7 @@ public class Enemy : LivingEntity {
             }
             else
             {
+                pathFinder.isStopped = true;
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
                 for (int i = 0; i < colliders.Length; i++)
                 {
@@ -137,5 +138,20 @@ public class Enemy : LivingEntity {
 
     private void OnTriggerStay(Collider other) {
         // 트리거 충돌한 상대방 게임 오브젝트가 추적 대상이라면 공격 실행   
+        if (!dead && Time.time >= lastAttackTime + timeBetAttack)
+        {
+            LivingEntity attackTarget = other.GetComponent<LivingEntity>();
+
+            if (attackTarget != null && attackTarget == targetEntity)
+            {
+                lastAttackTime = Time.time;
+
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                Vector3 hitNormal = transform.position - other.transform.position;
+
+                attackTarget.OnDamage(damage, hitPoint, hitNormal);
+            }
+
+        }
     }
 }
