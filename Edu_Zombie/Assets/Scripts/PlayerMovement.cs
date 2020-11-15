@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour {
         float moveDistance = playerInput.keyInput_z * moveSpeed * Time.deltaTime;
         print(moveDistance);
         playerRigidbody.MovePosition(transform.position + transform.forward * moveDistance);
+        // playerRigidbody.MovePosition(transform.position + transform.forward * moveDistance);
         playerAnimator.SetFloat("Move", moveDistance * 10);
         //Vector3 dir = new Vector3(playerInput.KEYINPUT_X, 0, playerInput.KEYINPUT_Z);
         //dir = Camera.main.transform.TransformDirection(dir);
